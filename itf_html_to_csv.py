@@ -9,10 +9,11 @@ import os
 import requests
 
 TEST = True
-
+with open('env.json','r') as env_file:
+    NEAR_AIRPORTS_API = dict(json.load(env_file))['uri']
 
 def get_5_nearest_airports(town, country):
-    response = requests.get(f'https://910e-80-192-214-25.ngrok-free.app/near_airports/{town}-{country}')
+    response = requests.get(f'{NEAR_AIRPORTS_API}/{town}-{country}')
     if response.status_code == 200:
         return list(response.json())
     else:
